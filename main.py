@@ -34,10 +34,14 @@ def colour_graph(G, size):
 		elif ((100.0 * colour_list["YA"])/size) < age_distribution[2]:
 			colour_map.append('yellow')
 			colour_list["YA"] += 1
+			
+		elif ((100.0 * colour_list["MA"])/size) < age_distribution[3]:
+			colour_map.append('yellow')
+			colour_list["MA"] += 1
 
 		else:
 			colour_map.append('red')
-			colour_list["YA"] += 1
+			colour_list["O"] += 1
 
 	return colour_map
 
