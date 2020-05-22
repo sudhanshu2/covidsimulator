@@ -45,7 +45,7 @@ def spread(G, size, labels):
 				# if the person has been infected for more than an average of 4 weeks
 				# then they either die or recovers.
 				# a day here maps to one round of transmission
-					if random.randint(0, 100) < 40:
+					if random.randint(0, 1000) < 30:
 						labels[v] = ("R", 0)
 					else:
 						labels[v] = ("D", 0)
