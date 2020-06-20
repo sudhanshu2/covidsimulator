@@ -177,3 +177,4 @@ def optimize():
     print(result.x)
   else:
     raise ValueError(result.message)
+optimize()
