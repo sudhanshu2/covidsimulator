@@ -13,12 +13,11 @@ import numpy.random as rn
 import seaborn as sns
 from scipy import optimize 
 from scipy.optimize import minimize 
+from scipy.optimize import minimize_scalar
 import ijson
 import datetime
 import requests 
 import os 
-
-data = [] # need to store an array of cumulative cases for a place here, let's work on scraping the data from the link you shared
 
 with requests.get("https://opendata.ecdc.europa.eu/covid19/casedistribution/json/", stream=True) as r:
   r.raise_for_status()
@@ -71,14 +70,15 @@ for i in range(1, len(cases_per_day)):
 
 
 def spread(p, t):
-  population = 135.26 * (10**7)
+  population = 1000
   susceptible = 0
   recovered = 0
   iterations = 30 
+  infected=1
   
-  G = nx.fast_gnp_random_graph(population, p)
-  pos = nx.random_layout(G)
-
+  print("right before creating the graph")
+  G = nx.erdos_renyi_graph(population, p)
+  print("created graph\n")
   for (u, v) in G.edges():
     G.edges[u,v]['weight'] = random.randint(0,100)
 
@@ -158,23 +158,26 @@ def spread(p, t):
   return list_infected
 
 
-
 def cost(arr):
   p = arr[0]
   t = arr[1]
-  data = cases[0:31]
   result = spread(p, t)
+  data = cases[0:len(result)]
   total = 0
+  print("lengths: ", len(data), len(result))
   for i in range(len(result)): # make sure while training the size of data = the number of iterations the spread functions runs for
-    total += ((data[i] - result[i])^2)
+    total += ((data[i] - result[i])**2)
+  print("total: ", total)
   return total
 
 def optimize():
   prange = ((0, 1), (0, 1))
   init_guess = [0.05, 0.1]
-  result = minimize(cost, init_guess,method='SLSQP', bounds=prange)
+  res = minimize(cost, arr, bounds=prange)
   if(result.success):
     print(result.x)
   else:
     raise ValueError(result.message)
+
+  
 optimize()
