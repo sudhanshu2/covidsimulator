@@ -97,9 +97,5 @@ legend_total = Legend(items=[
 
 p_per_day.add_layout(legend_per_day)
 p_total.add_layout(legend_total)
-
-# put all the plots in a VBox
 p = row(p_per_day, p_total)
-
-# show the results
 show(p)
