@@ -17,6 +17,8 @@ var caseColor = "#039be5"
 var currentType;
 var currentDuration;
 
+var currentChart = null;
+
 const dataType = {
 	CASES : "Cases",
 	DEATHS : "Deaths",
@@ -138,7 +140,10 @@ function draw_graph(data, dates, lineColor, label) {
     Chart.defaults.global.defaultFontFamily = "Open Sans"
     Chart.defaults.global.defaultFontSize = 16
     var fontColorPrimary = getComputedStyle(document.body).getPropertyValue("color")
-    new Chart(document.getElementById("line-graph"), {
+    if (currentChart != null) {
+        currentChart.destroy();
+    }
+    currentChart = new Chart(document.getElementById("line-graph"), {
         type: 'line',
         data: {
             labels: dates,
