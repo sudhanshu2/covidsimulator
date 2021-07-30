@@ -37,6 +37,7 @@ article {
 
 .button-group {
     display: inline-block;  
+    margin-left : 30px;
 }
 
 .button-group a {
