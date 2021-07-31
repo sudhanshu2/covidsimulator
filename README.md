@@ -1,3 +1,3 @@
 # Covid-19 Simulation
 
-This is a simulation of spread of the coronavirus in India.
+COVID-19 Statistics Global Dashboard with simulated case projections.
