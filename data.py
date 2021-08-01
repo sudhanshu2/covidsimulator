@@ -4,24 +4,37 @@
 
 from unittest.main import TestProgram
 
-
 try:
     import pandas as pd
     from predict import *
     import predict 
-    import pickle 
+    import numpy as np 
+    import json 
 except ImportError:
     raise ImportError("Data generation script not importing sufficient dependencies\n")
 #from pathlib import Path
 
+
+# Timeframe for the data read is initiated from Jan 22, 2021 : 22/01/2020
 _COVID_CASES_OVER_TIME_DATA = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
 _COVID_DEATHS_OVER_TIME_DATA = 'https://github.com/CSSEGISandData/COVID-19/blob/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv'
 _COVID_RECOVERED_OVER_TIME_DATA = 'https://github.com/CSSEGISandData/COVID-19/blob/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv'
 
 
-_DATA_PATH = "pickled_data"
+_DATA_PATH = "stored_data"
 
-# Timeframe for the data read is initiated from Jan 22, 2021 : 22/01/2020
+class NpEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.integer):
+            return int(obj)
+        elif isinstance(obj, np.floating):
+            return float(obj)
+        elif isinstance(obj, np.ndarray):
+            return obj.tolist()
+        else:
+            return super(NpEncoder, self).default(obj)
+
+
 
 def get_incident_cases(array):
     n = len(array)
@@ -80,7 +93,7 @@ def fetch_data():
  #       predicted_death_cases_dict[country] = predict.Predict().predict(death_cases_dict[country], dates)
     
     
-    data_pickle_file = open(_DATA_PATH, "wb")
+    data_pickle_file = open(_DATA_PATH, "w")
     db = {}
     db["current_total_confirmed"] = c_total_dict
     db["current_total_recovered"] = r_total_dict
@@ -94,7 +107,7 @@ def fetch_data():
 #   db["predicted_confirmed"] = predicted_confirmed_cases_dict
 #  db["predicted_recovered"] = predicted_recovered_cases_dict
 #    db["predicted_deaths"] = predicted_death_cases_dict
-    pickle.dump(db, data_pickle_file)
+    json.dump(db, data_pickle_file, cls=NpEncoder)
 
     data_pickle_file.close()
 
