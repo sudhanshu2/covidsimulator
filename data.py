@@ -89,7 +89,7 @@ def fetch_data():
     db["current_incident_deaths"] = d_incident_dict
     db["current_incident_recovered"] = r_incident_dict
     db["country_list"] =  countries
-
+    db["dates"] = dates
 
 #   db["predicted_confirmed"] = predicted_confirmed_cases_dict
 #  db["predicted_recovered"] = predicted_recovered_cases_dict
