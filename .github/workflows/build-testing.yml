@@ -23,5 +23,4 @@ jobs:
 
       - name : Test Script
         run : |
-              python directory.py
               python data.py
