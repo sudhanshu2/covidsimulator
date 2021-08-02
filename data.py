@@ -6,8 +6,6 @@ from unittest.main import TestProgram
 
 try:
     import pandas as pd
-    from predict import *
-    import predict 
     import numpy as np 
     import json 
 except ImportError:
