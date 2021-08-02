@@ -1,7 +1,5 @@
 # File works as intended but needs to be unit tested.
 
-from unittest.main import TestProgram
-from numpy.lib.stride_tricks import DummyArray
 import pandas as pd
 import numpy as np
 import os
