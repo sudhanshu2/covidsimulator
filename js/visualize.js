@@ -64,6 +64,14 @@ $(document).ready(function() {
 function update_graph() {
     update_data();
     refresh_graph();
+    number_highlights();
+}
+
+function number_highlights() {
+    document.getElementById("cases-yesterday").textContent = + daily_cases[daily_cases.length - 1];
+    document.getElementById("deaths-yesterday").textContent = + daily_deaths[daily_deaths.length - 1];
+    document.getElementById("total-cases").textContent = + cumulative_cases[cumulative_cases.length - 1];
+    document.getElementById("total-deaths").textContent = + cumulative_deaths[cumulative_deaths.length - 1];
 }
 
 function get_dates() {
@@ -153,7 +161,7 @@ function get_string_array(data) {
 function get_int_array(data) {
     return data.split("\n").filter(function (element) {
         if (element != "") {
-            return parseInt(element).toPrecision();
+            return Number(element).toPrecision();
         }
     });
 }
